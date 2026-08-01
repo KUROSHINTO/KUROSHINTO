@@ -442,6 +442,19 @@
       font-size: 15px;
       color: #c0c0c0;
       border-bottom: 1px solid #1a1a1a;
+      cursor: pointer;
+      transition: 0.2s;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 2px 0;
+    }
+
+    .punishment-item:hover {
+      background: rgba(212, 176, 77, 0.05);
+    }
+
+    .punishment-item:active {
+      transform: scale(0.98);
     }
 
     .punishment-item:last-child {
@@ -456,6 +469,7 @@
       font-size: 13px;
       min-width: 60px;
       text-align: center;
+      pointer-events: none;
     }
 
     .badge-yellow {
@@ -475,6 +489,7 @@
 
     .punishment-desc {
       color: #aaa;
+      pointer-events: none;
     }
 
     /* -------------------- CONTACTS -------------------- */
@@ -498,6 +513,7 @@
       padding: 25px 20px;
       text-align: center;
       transition: 0.35s ease;
+      cursor: pointer;
     }
 
     .contact-card:hover {
@@ -506,12 +522,17 @@
       box-shadow: 0 10px 30px rgba(212, 176, 77, 0.06);
     }
 
+    .contact-card:active {
+      transform: scale(0.97);
+    }
+
     .contact-role {
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 2px;
       color: #d4b04d;
       font-weight: 600;
+      pointer-events: none;
     }
 
     .contact-name {
@@ -521,12 +542,14 @@
       color: #f0f0f0;
       font-family: 'Oswald', sans-serif;
       letter-spacing: 1px;
+      pointer-events: none;
     }
 
     .contact-icon {
       font-size: 28px;
       margin-bottom: 8px;
       display: block;
+      pointer-events: none;
     }
 
     .contact-card.leader {
@@ -541,7 +564,7 @@
 
     .contact-card.assistant {
       border-color: #6a8a9a;
-      border-width: 1px;
+      border-width: 2px;
       background: linear-gradient(145deg, #0e1418, #080c0e);
     }
 
@@ -1004,9 +1027,74 @@
       color: #999;
       margin-top: 4px;
     }
+
+    /* Музыкальный индикатор - без подсказок */
+    .music-indicator {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 176, 77, 0.2);
+      border-radius: 50px;
+      padding: 10px 18px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      font-size: 13px;
+      color: #d4b04d;
+      animation: fadeIn 0.5s ease;
+      box-shadow: 0 0 30px rgba(212, 176, 77, 0.05);
+    }
+
+    .music-indicator.active {
+      display: flex;
+    }
+
+    .music-indicator .note {
+      animation: pulseNote 1s infinite;
+    }
+
+    @keyframes pulseNote {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .music-indicator .stop-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #888;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .music-indicator .stop-btn:hover {
+      border-color: #d4b04d;
+      color: #d4b04d;
+    }
   </style>
 </head>
 <body>
+  <!-- Музыкальный индикатор -->
+  <div class="music-indicator" id="musicIndicator">
+    <span class="note">🎵</span>
+    <span style="opacity:0.7; font-size:12px;">♫</span>
+    <button class="stop-btn" id="stopMusicBtn">✕</button>
+  </div>
+
   <header>
     <a href="#hero" class="logo">
       <div class="logo-circle">
@@ -1093,15 +1181,15 @@
 
       <div class="punishment-grid">
         <h3>⚖️ НАКАЗАНИЯ</h3>
-        <div class="punishment-item">
+        <div class="punishment-item" id="punishment1">
           <span class="punishment-badge badge-yellow">🟨 1</span>
           <span class="punishment-desc">Предупреждение</span>
         </div>
-        <div class="punishment-item">
+        <div class="punishment-item" id="punishment2">
           <span class="punishment-badge badge-orange">🟧 2</span>
           <span class="punishment-desc">Мут или временное ограничение</span>
         </div>
-        <div class="punishment-item">
+        <div class="punishment-item" id="punishment3">
           <span class="punishment-badge badge-red">🟥 3</span>
           <span class="punishment-desc">Исключение из клана или бан</span>
         </div>
@@ -1151,7 +1239,7 @@
         <div class="contact-role">Vice-Leader</div>
         <div class="contact-name">b9taa</div>
       </div>
-      <div class="contact-card assistant reveal">
+      <div class="contact-card assistant reveal" id="assistantContact">
         <span class="contact-icon">🛡️</span>
         <div class="contact-role">Assistant Deputy</div>
         <div class="contact-name">sad1k</div>
@@ -1270,15 +1358,120 @@
         });
       });
 
-      // ===== ЗВУК =====
+      // ===== МУЗЫКА "67-GAZAN" ПО ВАШЕЙ ССЫЛКЕ =====
+      const MUSIC_URL = "https://www.myinstants.com/media/sounds/67-gazan.mp3";
+      
+      let audio = null;
+      let isMusicPlaying = false;
+      let punishmentClickCount = 0;
+      let assistantClicked = false;
+      let musicTriggered = false;
+
+      const musicIndicator = document.getElementById('musicIndicator');
+      const stopMusicBtn = document.getElementById('stopMusicBtn');
+
+      function playMusic() {
+        if (musicTriggered) return;
+        
+        try {
+          if (!audio) {
+            audio = new Audio(MUSIC_URL);
+            audio.preload = "auto";
+            audio.loop = true;
+            
+            audio.addEventListener('ended', () => {
+              if (isMusicPlaying) {
+                audio.currentTime = 0;
+                audio.play().catch(() => {});
+              }
+            });
+          }
+          
+          audio.play().then(() => {
+            isMusicPlaying = true;
+            musicTriggered = true;
+            musicIndicator.classList.add('active');
+            console.log("🎵 67-gazan играет!");
+          }).catch(err => {
+            console.log("Не удалось воспроизвести музыку:", err);
+            if (err.name === 'NotAllowedError') {
+              alert("Нажмите еще раз — браузер требует взаимодействия с пользователем");
+            }
+          });
+        } catch (e) {
+          console.error("Ошибка воспроизведения:", e);
+        }
+      }
+
+      function stopMusic() {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          isMusicPlaying = false;
+          musicIndicator.classList.remove('active');
+          musicTriggered = false;
+          punishmentClickCount = 0;
+          assistantClicked = false;
+          console.log("🎵 Музыка остановлена");
+        }
+      }
+
+      stopMusicBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stopMusic();
+      });
+
+      // Клик на наказания
+      const punishmentItems = document.querySelectorAll('.punishment-item');
+      punishmentItems.forEach((item) => {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (musicTriggered) return;
+          punishmentClickCount++;
+          console.log(`Наказание нажато ${punishmentClickCount}/3`);
+        });
+      });
+
+      // Клик на Assistant Deputy
+      const assistantCard = document.getElementById('assistantContact');
+      if (assistantCard) {
+        assistantCard.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (musicTriggered) return;
+          assistantClicked = true;
+          console.log("Assistant Deputy нажат!");
+          if (punishmentClickCount >= 3 && assistantClicked) {
+            playMusic();
+          }
+        });
+      }
+
+      // Автосброс через 15 секунд
+      let resetTimer = null;
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.punishment-item') && 
+            !e.target.closest('#assistantContact') &&
+            !musicTriggered) {
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(() => {
+            if (!musicTriggered) {
+              punishmentClickCount = 0;
+              assistantClicked = false;
+              console.log("Счетчик сброшен");
+            }
+          }, 15000);
+        }
+      });
+
+      // ===== ЗВУК "КОЧ БРАТАН" =====
       const SOUND_URL = "https://www.myinstants.com/media/sounds/koch-bratan.mp3";
-      const audio = new Audio(SOUND_URL);
-      audio.preload = "auto";
+      const soundAudio = new Audio(SOUND_URL);
+      soundAudio.preload = "auto";
 
       function playSound(e) {
-        audio.pause();
-        audio.currentTime = 0;
-        audio.play().catch(err => {
+        soundAudio.pause();
+        soundAudio.currentTime = 0;
+        soundAudio.play().catch(err => {
           console.log("Не удалось воспроизвести звук:", err);
         });
       }
@@ -1295,7 +1488,8 @@
         btn2.style.cursor = 'default';
       }
 
-      console.log("🔊 Звук подключен. Замените SOUND_URL на ссылку с 'коч братан'");
+      console.log("🎵 Скрытая активация: нажми 🟨1, 🟧2, 🟥3, затем Assistant Deputy");
+      console.log("🔊 Источник: " + MUSIC_URL);
     });
   </script>
 </body>
