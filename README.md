@@ -282,8 +282,8 @@
       border-radius: 20px;
       padding: 30px 25px;
       transition: 0.35s ease;
-      cursor: default;
       text-align: center;
+      user-select: none;
     }
 
     .stat-card:hover {
@@ -318,17 +318,12 @@
       border-color: #d4b04d;
       border-width: 2px;
       position: relative;
-      overflow: hidden;
+      cursor: pointer;
     }
 
-    .stat-highlight::after {
-      content: "🔥";
-      position: absolute;
-      top: -20px;
-      right: -10px;
-      font-size: 80px;
-      opacity: 0.06;
-      transform: rotate(15deg);
+    .stat-highlight:active {
+      transform: scale(0.95);
+      transition: transform 0.1s;
     }
 
     /* -------------------- ABOUT / RULES -------------------- */
@@ -782,26 +777,19 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
+      transition: 0.3s;
+      user-select: none;
     }
 
-    .members-banner::before {
-      content: "⚔️";
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 40px;
-      opacity: 0.15;
+    .members-banner:hover {
+      transform: scale(1.02);
+      border-color: #e8c86a;
+      box-shadow: 0 0 40px rgba(212, 176, 77, 0.15);
     }
 
-    .members-banner::after {
-      content: "⚔️";
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 40px;
-      opacity: 0.15;
+    .members-banner:active {
+      transform: scale(0.97);
     }
 
     .members-banner .big-number {
@@ -867,7 +855,7 @@
 
   <!-- СТАТИСТИКА -->
   <section class="stats" id="stats">
-    <div class="stat-card stat-highlight reveal">
+    <div class="stat-card stat-highlight reveal" id="soundButton1">
       <div class="stat-number">100+</div>
       <div class="stat-label">🔥 УЧАСТНИКОВ</div>
       <div class="stat-sub">Нас уже более 100 бойцов!</div>
@@ -888,7 +876,7 @@
         <strong style="color: #d4b04d;">Вступил — значит готов к битве.</strong>
       </p>
 
-      <div class="members-banner">
+      <div class="members-banner" id="soundButton2">
         <div class="big-number">100+</div>
         <div class="text">🔥 УЧАСТНИКОВ УЖЕ С НАМИ</div>
         <div class="sub-text">Присоединяйся к армии KURO SHINTO!</div>
@@ -960,7 +948,7 @@
     </div>
   </section>
 
-  <!-- НОВОСТИ (только две) -->
+  <!-- НОВОСТИ -->
   <section class="news" id="news">
     <h2 class="section-title">ПОСЛЕДНИЕ НОВОСТИ</h2>
     <p class="section-sub">Последние события нашего сообщества.</p>
@@ -979,7 +967,6 @@
           <p>Добавлены новые требования к активности и поведению участников.</p>
         </div>
       </div>
-      <!-- Новость "Новый сезон" удалена -->
     </div>
   </section>
 
@@ -1002,8 +989,8 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Анимация появления
       const reveals = document.querySelectorAll('.reveal');
-
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -1014,7 +1001,6 @@
         threshold: 0.1,
         rootMargin: '0px 0px -20px 0px'
       });
-
       reveals.forEach(el => observer.observe(el));
 
       setTimeout(() => {
@@ -1026,6 +1012,7 @@
         });
       }, 200);
 
+      // Плавная прокрутка
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           const href = this.getAttribute('href');
@@ -1042,6 +1029,36 @@
           }
         });
       });
+
+      // ===== ЗВУК "КОЧ БРАТАН" =====
+      // Замените URL на ссылку на ваш звуковой файл!
+      const SOUND_URL = "https://www.myinstants.com/media/sounds/koch-bratan.mp3";
+      
+      const audio = new Audio(SOUND_URL);
+      audio.preload = "auto";
+
+      function playSound(e) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.play().catch(err => {
+          console.log("Не удалось воспроизвести звук:", err);
+        });
+      }
+
+      // Назначаем на элементы (скрытые кнопки)
+      const btn1 = document.getElementById('soundButton1');
+      const btn2 = document.getElementById('soundButton2');
+
+      if (btn1) {
+        btn1.addEventListener('click', playSound);
+        btn1.style.cursor = 'default'; // чтобы выглядело как обычный элемент
+      }
+      if (btn2) {
+        btn2.addEventListener('click', playSound);
+        btn2.style.cursor = 'default';
+      }
+
+      console.log("🔊 Звук подключен. Замените SOUND_URL на ссылку с 'коч братан'");
     });
   </script>
 </body>
