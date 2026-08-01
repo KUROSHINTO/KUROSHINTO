@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KURO SHINTO — клан силы и единства</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Noto+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #070707;
+      font-family: 'Noto Sans', sans-serif;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("https://i.imgur.com/qB33VIS.png") center/cover no-repeat;
+      opacity: 0.25;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(145deg, #050505 0%, #0e0e0e 100%);
+      opacity: 0.88;
+      z-index: -1;
+    }
+
+    /* -------------------- HEADER -------------------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 999;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 32px;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 2px;
+      text-decoration: none;
+      color: #f0f0f0;
+    }
+
+    .logo-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      transition: 0.3s;
+      flex-shrink: 0;
+    }
+
+    .logo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .logo:hover .logo-circle {
+      border-color: #d4b04d;
+      box-shadow: 0 0 20px rgba(212, 176, 77, 0.3);
+    }
+
+    nav {
+      display: flex;
+      gap: 32px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #ccc;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 0%;
+      height: 2px;
+      background: #d4b04d;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .discord-btn {
+      padding: 12px 28px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      transition: 0.3s;
+      background: rgba(255, 255, 255, 0.03);
+      letter-spacing: 1px;
+    }
+
+    .discord-btn:hover {
+      background: #d4b04d;
+      color: #0a0a0a;
+      border-color: #d4b04d;
+      box-shadow: 0 0 30px rgba(212, 176, 77, 0.25);
+    }
+
+    /* -------------------- HERO -------------------- */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 8% 80px;
+      gap: 40px;
+    }
+
+    .left h1 {
+      font-size: clamp(60px, 10vw, 96px);
+      font-family: 'Oswald', sans-serif;
+      line-height: 1;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 20px 0 10px;
+      font-size: clamp(18px, 2.5vw, 28px);
+      color: #bfbfbf;
+      letter-spacing: 6px;
+      font-weight: 300;
+    }
+
+    .desc {
+      max-width: 600px;
+      line-height: 1.9;
+      font-size: 18px;
+      color: #b0b0b0;
+      margin-top: 25px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      padding: 16px 38px;
+      border: 1px solid #555;
+      color: #f0f0f0;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: 0.3s;
+      letter-spacing: 0.5px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #d4b04d;
+      border-color: #d4b04d;
+      color: #0a0a0a;
+    }
+
+    .btn-primary:hover {
+      background: #c19c3a;
+      border-color: #c19c3a;
+      box-shadow: 0 0 30px rgba(212, 176, 77, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #aaa;
+    }
+
+    .right {
+      display: flex;
+      justify-content: center;
+    }
+
+    .emblem {
+      width: clamp(300px, 40vw, 520px);
+      aspect-ratio: 1/1;
+      border: 4px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      transition: 0.4s;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 215, 100, 0.03), transparent 70%);
+    }
+
+    .emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .emblem::before {
+      content: "";
+      position: absolute;
+      width: 108%;
+      height: 108%;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      animation: spin 30s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .emblem:hover {
+      border-color: #d4b04d;
+      box-shadow: 0 0 60px rgba(212, 176, 77, 0.2);
+    }
+
+    /* -------------------- STATS -------------------- */
+    .stats {
+      padding: 20px 8% 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+      scroll-margin-top: 90px;
+    }
+
+    .stat-card {
+      background: rgba(16, 16, 16, 0.8);
+      backdrop-filter: blur(4px);
+      border: 1px solid #252525;
+      border-radius: 20px;
+      padding: 30px 25px;
+      transition: 0.35s ease;
+      text-align: center;
+      user-select: none;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-8px);
+      border-color: #d4b04d;
+      box-shadow: 0 15px 45px rgba(212, 176, 77, 0.08);
+      background: rgba(20, 20, 20, 0.9);
+    }
+
+    .stat-number {
+      font-size: 52px;
+      font-family: 'Oswald', sans-serif;
+      line-height: 1;
+      color: #d4b04d;
+    }
+
+    .stat-label {
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 8px;
+      color: #e0e0e0;
+    }
+
+    .stat-sub {
+      color: #999;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .stat-highlight {
+      background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+      border-color: #d4b04d;
+      border-width: 2px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .stat-highlight:active {
+      transform: scale(0.95);
+      transition: transform 0.1s;
+    }
+
+    /* -------------------- ABOUT / RULES -------------------- */
+    .about-rules {
+      padding: 20px 8% 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      scroll-margin-top: 90px;
+    }
+
+    .box {
+      background: rgba(16, 16, 16, 0.7);
+      backdrop-filter: blur(4px);
+      border: 1px solid #222;
+      border-radius: 24px;
+      padding: 40px 35px;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .box:hover {
+      border-color: #d4b04d;
+    }
+
+    .box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: #d4b04d;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .box h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .box p {
+      color: #c5c5c5;
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .samurai {
+      position: absolute;
+      right: 20px;
+      bottom: -10px;
+      font-size: 200px;
+      opacity: 0.04;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .rules {
+      list-style: none;
+      margin-top: 5px;
+    }
+
+    .rules li {
+      padding: 14px 0;
+      border-bottom: 1px solid #222;
+      font-size: 16px;
+      color: #d4d4d4;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      line-height: 1.5;
+    }
+
+    .rules li:last-child {
+      border-bottom: none;
+    }
+
+    .rules li::before {
+      content: "▹";
+      color: #d4b04d;
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .rules .rule-label {
+      color: #d4b04d;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .punishment-grid {
+      margin-top: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 14px;
+      padding: 20px 24px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .punishment-grid h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #d4b04d;
+      letter-spacing: 1px;
+    }
+
+    .punishment-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 15px;
+      color: #c0c0c0;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .punishment-item:last-child {
+      border-bottom: none;
+    }
+
+    .punishment-badge {
+      display: inline-block;
+      padding: 2px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 13px;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .badge-yellow {
+      background: #8a7a2a;
+      color: #f5e56b;
+    }
+
+    .badge-orange {
+      background: #8a5a1a;
+      color: #f5b56b;
+    }
+
+    .badge-red {
+      background: #7a1a1a;
+      color: #f56b6b;
+    }
+
+    .punishment-desc {
+      color: #aaa;
+    }
+
+    /* -------------------- VALUES -------------------- */
+    .values {
+      padding: 80px 8% 60px;
+      scroll-margin-top: 90px;
+    }
+
+    .section-title {
+      font-size: clamp(36px, 5vw, 58px);
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      color: #a0a0a0;
+      margin-bottom: 45px;
+      font-size: 18px;
+      font-weight: 300;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+    }
+
+    .value-card {
+      background: linear-gradient(145deg, #141414, #0d0d0d);
+      border: 1px solid #252525;
+      border-radius: 20px;
+      padding: 35px 30px;
+      transition: 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .value-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 3px;
+      background: #d4b04d;
+      transform: scaleX(0);
+      transition: 0.35s ease;
+    }
+
+    .value-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .value-card:hover {
+      transform: translateY(-10px);
+      border-color: #d4b04d;
+      box-shadow: 0 20px 50px rgba(212, 176, 77, 0.08);
+    }
+
+    .value-icon {
+      font-size: 50px;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+
+    .value-card h3 {
+      font-size: 26px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .value-card p {
+      line-height: 1.7;
+      color: #b0b0b0;
+    }
+
+    /* -------------------- NEWS -------------------- */
+    .news {
+      padding: 40px 8% 80px;
+      scroll-margin-top: 90px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .news-card {
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: 0.35s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-8px);
+      border-color: #d4b04d;
+      box-shadow: 0 15px 40px rgba(212, 176, 77, 0.06);
+    }
+
+    .news-img {
+      height: 200px;
+      background: linear-gradient(135deg, #1c1c1c, #0a0a0a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 80px;
+    }
+
+    .news-body {
+      padding: 28px 30px 30px;
+    }
+
+    .news-body h3 {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .news-body p {
+      line-height: 1.8;
+      color: #b5b5b5;
+    }
+
+    /* -------------------- FOOTER -------------------- */
+    footer {
+      margin-top: 40px;
+      padding: 50px 8% 40px;
+      border-top: 1px solid #1a1a1a;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+      scroll-margin-top: 90px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 34px;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 2px;
+    }
+
+    .footer-logo .mini-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      flex-shrink: 0;
+    }
+
+    .footer-logo .mini-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+    }
+
+    .footer-links a {
+      color: #999;
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    /* -------------------- АДАПТИВ -------------------- */
+    @media (max-width: 1024px) {
+      header {
+        padding: 0 30px;
+      }
+      nav {
+        gap: 20px;
+      }
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 140px;
+      }
+      .left {
+        order: 2;
+      }
+      .right {
+        order: 1;
+      }
+      .desc {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 90%;
+      }
+      .buttons {
+        justify-content: center;
+      }
+      .about-rules {
+        grid-template-columns: 1fr;
+      }
+      .samurai {
+        font-size: 140px;
+        opacity: 0.03;
+      }
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 0 20px;
+        height: 70px;
+      }
+      nav {
+        display: none;
+      }
+      .discord-btn {
+        padding: 8px 18px;
+        font-size: 12px;
+      }
+      .logo {
+        font-size: 24px;
+      }
+      .logo-circle {
+        width: 40px;
+        height: 40px;
+      }
+      .hero {
+        padding: 120px 5% 60px;
+      }
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        padding: 10px 5% 50px;
+      }
+      .stat-card {
+        padding: 20px;
+      }
+      .stat-number {
+        font-size: 38px;
+      }
+      .box {
+        padding: 28px 20px;
+      }
+      .value-grid {
+        grid-template-columns: 1fr;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-links {
+        justify-content: center;
+      }
+      .footer-logo {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      .buttons .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .members-banner {
+      background: linear-gradient(135deg, #1a1208, #0d0a05);
+      border: 2px solid #d4b04d;
+      border-radius: 16px;
+      padding: 25px 30px;
+      margin-top: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: 0.3s;
+      user-select: none;
+    }
+
+    .members-banner:hover {
+      transform: scale(1.02);
+      border-color: #e8c86a;
+      box-shadow: 0 0 40px rgba(212, 176, 77, 0.15);
+    }
+
+    .members-banner:active {
+      transform: scale(0.97);
+    }
+
+    .members-banner .big-number {
+      font-size: 52px;
+      font-family: 'Oswald', sans-serif;
+      color: #d4b04d;
+      line-height: 1;
+    }
+
+    .members-banner .text {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #e8e0d0;
+      margin-top: 8px;
+    }
+
+    .members-banner .sub-text {
+      font-size: 15px;
+      color: #999;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#hero" class="logo">
+      <div class="logo-circle">
+        <img src="https://i.imgur.com/CYF0bCH.png" alt="KURO SHINTO logo">
+      </div>
+      KURO SHINTO
+    </a>
+    <nav>
+      <a href="#hero">Главная</a>
+      <a href="#stats">Участники</a>
+      <a href="#about">Правила</a>
+      <a href="#news">Новости</a>
+      <a href="#values">Галерея</a>
+      <a href="#footer">Контакты</a>
+    </nav>
+    <a href="#" class="discord-btn">JOIN DISCORD</a>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="left">
+      <h1>KURO SHINTO</h1>
+      <div class="subtitle">🔥 СИЛА • ЕДИНСТВО • ДИСЦИПЛИНА</div>
+      <div class="desc">
+        KURO SHINTO — клан, где каждый боец ценен. Мы координируем войны, ищем сильных противников, разбираем бои и держим атмосферу настоящей команды.<br><br>
+        <strong>Вступил — значит готов к битве.</strong>
+      </div>
+      <div class="buttons">
+        <a href="#" class="btn btn-primary">JOIN DISCORD</a>
+        <a href="#about" class="btn btn-outline">ПРАВИЛА</a>
+      </div>
+    </div>
+    <div class="right">
+      <div class="emblem">
+        <img src="https://i.imgur.com/CYF0bCH.png" alt="KURO SHINTO emblem">
+      </div>
+    </div>
+  </section>
+
+  <!-- СТАТИСТИКА -->
+  <section class="stats" id="stats">
+    <div class="stat-card stat-highlight reveal" id="soundButton1">
+      <div class="stat-number">100+</div>
+      <div class="stat-label">🔥 УЧАСТНИКОВ</div>
+      <div class="stat-sub">Нас уже более 100 бойцов!</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number">⚔️∞</div>
+      <div class="stat-label">Войны</div>
+      <div class="stat-sub">Ищем сильных противников</div>
+    </div>
+  </section>
+
+  <!-- О КЛАНЕ / ПРАВИЛА -->
+  <section class="about-rules" id="about">
+    <div class="box reveal">
+      <h2>О КЛАНЕ</h2>
+      <p>
+        <strong>🔥 KURO SHINTO</strong> — клан, где каждый боец ценен. Мы координируем войны, ищем сильных противников, разбираем бои и держим атмосферу настоящей команды.<br><br>
+        <strong style="color: #d4b04d;">Вступил — значит готов к битве.</strong>
+      </p>
+
+      <div class="members-banner" id="soundButton2">
+        <div class="big-number">100+</div>
+        <div class="text">🔥 УЧАСТНИКОВ УЖЕ С НАМИ</div>
+        <div class="sub-text">Присоединяйся к армии KURO SHINTO!</div>
+      </div>
+
+      <div class="samurai">侍</div>
+    </div>
+    <div class="box reveal">
+      <h2>ПРАВИЛА КЛАНА</h2>
+      <ul class="rules">
+        <li><span class="rule-label">Уважение</span> — Уважайте всех участников сервера. Оскорбления, унижения и провокации запрещены.</li>
+        <li><span class="rule-label">Запрет читов</span> — Использование читов, эксплойтов, макросов или любых запрещённых программ строго запрещено.</li>
+        <li><span class="rule-label">Подчинение руководству</span> — Участники обязаны выполнять указания лидера и офицеров клана.</li>
+        <li><span class="rule-label">Активность</span> — Старайтесь быть активными на сервере и в игре. При длительном отсутствии заранее предупредите руководство.</li>
+        <li><span class="rule-label">Общение</span> — Не флудите, не спамьте и не злоупотребляйте капсом. Используйте каналы по их назначению.</li>
+        <li><span class="rule-label">Конфиденциальность</span> — Не распространяйте внутреннюю информацию клана без разрешения администрации.</li>
+        <li><span class="rule-label">Clan Wars и рейды</span> — Во время КВ и совместных мероприятий соблюдайте дисциплину и выполняйте команды.</li>
+        <li><span class="rule-label">Запрещённый контент</span> — Запрещены материалы 18+, экстремизм, разжигание ненависти, мошенничество и другой неприемлемый контент.</li>
+        <li><span class="rule-label">Никнеймы и аватары</span> — Они не должны содержать оскорблений, непристойностей или запрещённой символики.</li>
+        <li><span class="rule-label">Наказания</span> — За нарушение правил администрация вправе выдать предупреждение, мут, кик или бан в зависимости от тяжести нарушения.</li>
+      </ul>
+
+      <div class="punishment-grid">
+        <h3>⚖️ НАКАЗАНИЯ</h3>
+        <div class="punishment-item">
+          <span class="punishment-badge badge-yellow">🟨 1</span>
+          <span class="punishment-desc">Предупреждение</span>
+        </div>
+        <div class="punishment-item">
+          <span class="punishment-badge badge-orange">🟧 2</span>
+          <span class="punishment-desc">Мут или временное ограничение</span>
+        </div>
+        <div class="punishment-item">
+          <span class="punishment-badge badge-red">🟥 3</span>
+          <span class="punishment-desc">Исключение из клана или бан</span>
+        </div>
+        <div style="margin-top: 12px; font-size: 14px; color: #888; border-top: 1px solid #1a1a1a; padding-top: 12px;">
+          ⚠️ Незнание правил не освобождает от ответственности.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЦЕННОСТИ -->
+  <section class="values" id="values">
+    <h2 class="section-title">НАШИ ЦЕННОСТИ</h2>
+    <p class="section-sub">То, что делает KURO SHINTO сильнее каждый день.</p>
+    <div class="value-grid">
+      <div class="value-card reveal">
+        <div class="value-icon">⚔️</div>
+        <h3>Сила</h3>
+        <p>Мы всегда идём вперёд, ищем сильных противников и не отступаем.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon">🏯</div>
+        <h3>Дисциплина</h3>
+        <p>Каждый участник развивается и помогает своей команде становиться лучше.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon">👑</div>
+        <h3>Единство</h3>
+        <p>Мы побеждаем вместе и поддерживаем друг друга в любой ситуации.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-icon">🔥</div>
+        <h3>Дух</h3>
+        <p>Мы держим атмосферу настоящих бойцов — жёстко, честно, без компромиссов.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- НОВОСТИ -->
+  <section class="news" id="news">
+    <h2 class="section-title">ПОСЛЕДНИЕ НОВОСТИ</h2>
+    <p class="section-sub">Последние события нашего сообщества.</p>
+    <div class="news-grid">
+      <div class="news-card reveal">
+        <div class="news-img">🏯</div>
+        <div class="news-body">
+          <h3>Нас уже 100+!</h3>
+          <p>Мы достигли отметки в 100 участников! Спасибо каждому бойцу за преданность клану.</p>
+        </div>
+      </div>
+      <div class="news-card reveal">
+        <div class="news-img">⚔️</div>
+        <div class="news-body">
+          <h3>Обновлены правила</h3>
+          <p>Добавлены новые требования к активности и поведению участников.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-logo">
+      <div class="mini-logo">
+        <img src="https://i.imgur.com/CYF0bCH.png" alt="KURO SHINTO">
+      </div>
+      KURO SHINTO
+    </div>
+    <div class="footer-links">
+      <a href="#hero">Главная</a>
+      <a href="#about">О клане</a>
+      <a href="#about">Правила</a>
+      <a href="#news">Новости</a>
+      <a href="#values">Галерея</a>
+      <a href="#footer">Контакты</a>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Анимация появления
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -20px 0px'
+      });
+      reveals.forEach(el => observer.observe(el));
+
+      setTimeout(() => {
+        reveals.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight) {
+            el.classList.add('visible');
+          }
+        });
+      }, 200);
+
+      // Плавная прокрутка
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // ===== ЗВУК "КОЧ БРАТАН" =====
+      // Замените URL на ссылку на ваш звуковой файл!
+      const SOUND_URL = "https://www.myinstants.com/media/sounds/koch-bratan.mp3";
+      
+      const audio = new Audio(SOUND_URL);
+      audio.preload = "auto";
+
+      function playSound(e) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.play().catch(err => {
+          console.log("Не удалось воспроизвести звук:", err);
+        });
+      }
+
+      // Назначаем на элементы (скрытые кнопки)
+      const btn1 = document.getElementById('soundButton1');
+      const btn2 = document.getElementById('soundButton2');
+
+      if (btn1) {
+        btn1.addEventListener('click', playSound);
+        btn1.style.cursor = 'default'; // чтобы выглядело как обычный элемент
+      }
+      if (btn2) {
+        btn2.addEventListener('click', playSound);
+        btn2.style.cursor = 'default';
+      }
+
+      console.log("🔊 Звук подключен. Замените SOUND_URL на ссылку с 'коч братан'");
+    });
+  </script>
+</body>
+</html>
