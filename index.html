@@ -477,6 +477,78 @@
       color: #aaa;
     }
 
+    /* -------------------- CONTACTS -------------------- */
+    .contacts {
+      padding: 40px 8% 80px;
+      scroll-margin-top: 90px;
+    }
+
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .contact-card {
+      background: rgba(16, 16, 16, 0.7);
+      backdrop-filter: blur(4px);
+      border: 1px solid #252525;
+      border-radius: 16px;
+      padding: 25px 20px;
+      text-align: center;
+      transition: 0.35s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-6px);
+      border-color: #d4b04d;
+      box-shadow: 0 10px 30px rgba(212, 176, 77, 0.06);
+    }
+
+    .contact-role {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #d4b04d;
+      font-weight: 600;
+    }
+
+    .contact-name {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 6px;
+      color: #f0f0f0;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .contact-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .contact-card.leader {
+      border-color: #d4b04d;
+      border-width: 2px;
+      background: linear-gradient(145deg, #1a1408, #0d0a05);
+    }
+
+    .contact-card.leader .contact-role {
+      color: #e8c86a;
+    }
+
+    .contact-card.assistant {
+      border-color: #6a8a9a;
+      border-width: 1px;
+      background: linear-gradient(145deg, #0e1418, #080c0e);
+    }
+
+    .contact-card.assistant .contact-role {
+      color: #7aadc9;
+    }
+
     /* -------------------- VALUES -------------------- */
     .values {
       padding: 80px 8% 60px;
@@ -691,6 +763,9 @@
         font-size: 140px;
         opacity: 0.03;
       }
+      .contacts-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     @media (max-width: 700px) {
@@ -735,6 +810,16 @@
       .news-grid {
         grid-template-columns: 1fr;
       }
+      .contacts-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .contact-card {
+        padding: 18px 15px;
+      }
+      .contact-name {
+        font-size: 18px;
+      }
       footer {
         flex-direction: column;
         text-align: center;
@@ -750,6 +835,9 @@
     @media (max-width: 450px) {
       .stats {
         grid-template-columns: 1fr;
+      }
+      .contacts-grid {
+        grid-template-columns: 1fr 1fr;
       }
       .buttons .btn {
         width: 100%;
@@ -828,7 +916,7 @@
       <a href="#about">Правила</a>
       <a href="#news">Новости</a>
       <a href="#values">Галерея</a>
-      <a href="#footer">Контакты</a>
+      <a href="#contacts">Контакты</a>
     </nav>
     <a href="#" class="discord-btn">JOIN DISCORD</a>
   </header>
@@ -920,6 +1008,39 @@
     </div>
   </section>
 
+  <!-- КОНТАКТЫ -->
+  <section class="contacts" id="contacts">
+    <h2 class="section-title">👑 КОНТАКТЫ РУКОВОДСТВА</h2>
+    <p class="section-sub">Свяжись с нами в Discord</p>
+    <div class="contacts-grid">
+      <div class="contact-card leader reveal">
+        <span class="contact-icon">👑</span>
+        <div class="contact-role">Leader</div>
+        <div class="contact-name">xxlsw</div>
+      </div>
+      <div class="contact-card reveal">
+        <span class="contact-icon">⚔️</span>
+        <div class="contact-role">Vice-Leader</div>
+        <div class="contact-name">fatafakamazafaka</div>
+      </div>
+      <div class="contact-card reveal">
+        <span class="contact-icon">⚔️</span>
+        <div class="contact-role">Vice-Leader</div>
+        <div class="contact-name">kaladeyka</div>
+      </div>
+      <div class="contact-card reveal">
+        <span class="contact-icon">⚔️</span>
+        <div class="contact-role">Vice-Leader</div>
+        <div class="contact-name">b9taa</div>
+      </div>
+      <div class="contact-card assistant reveal">
+        <span class="contact-icon">🛡️</span>
+        <div class="contact-role">Assistant Deputy</div>
+        <div class="contact-name">sad1k</div>
+      </div>
+    </div>
+  </section>
+
   <!-- ЦЕННОСТИ -->
   <section class="values" id="values">
     <h2 class="section-title">НАШИ ЦЕННОСТИ</h2>
@@ -983,7 +1104,7 @@
       <a href="#about">Правила</a>
       <a href="#news">Новости</a>
       <a href="#values">Галерея</a>
-      <a href="#footer">Контакты</a>
+      <a href="#contacts">Контакты</a>
     </div>
   </footer>
 
@@ -1030,10 +1151,8 @@
         });
       });
 
-      // ===== ЗВУК "КОЧ БРАТАН" =====
-      // Замените URL на ссылку на ваш звуковой файл!
+      // ===== ЗВУК =====
       const SOUND_URL = "https://www.myinstants.com/media/sounds/koch-bratan.mp3";
-      
       const audio = new Audio(SOUND_URL);
       audio.preload = "auto";
 
@@ -1045,13 +1164,12 @@
         });
       }
 
-      // Назначаем на элементы (скрытые кнопки)
       const btn1 = document.getElementById('soundButton1');
       const btn2 = document.getElementById('soundButton2');
 
       if (btn1) {
         btn1.addEventListener('click', playSound);
-        btn1.style.cursor = 'default'; // чтобы выглядело как обычный элемент
+        btn1.style.cursor = 'default';
       }
       if (btn2) {
         btn2.addEventListener('click', playSound);
