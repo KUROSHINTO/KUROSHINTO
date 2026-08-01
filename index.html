@@ -549,6 +549,89 @@
       color: #7aadc9;
     }
 
+    /* -------------------- DISCORD SERVER CARD -------------------- */
+    .discord-server {
+      padding: 0 8% 40px;
+      scroll-margin-top: 90px;
+    }
+
+    .server-card {
+      background: linear-gradient(145deg, #1a1a2e, #0d0d1a);
+      border: 2px solid #5865F2;
+      border-radius: 24px;
+      padding: 40px 45px;
+      text-align: center;
+      transition: 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .server-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(88, 101, 242, 0.15);
+      border-color: #7984f5;
+    }
+
+    .server-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(88, 101, 242, 0.03), transparent 60%);
+      pointer-events: none;
+    }
+
+    .server-card .discord-icon {
+      font-size: 60px;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .server-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      letter-spacing: 2px;
+      color: #f0f0f0;
+    }
+
+    .server-card .server-stats {
+      color: #a0a0b0;
+      font-size: 16px;
+      margin: 8px 0 20px;
+    }
+
+    .server-card .server-stats span {
+      color: #5865F2;
+      font-weight: 600;
+    }
+
+    .server-card .join-btn {
+      display: inline-block;
+      padding: 16px 50px;
+      background: #5865F2;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 18px;
+      text-decoration: none;
+      transition: 0.3s;
+      letter-spacing: 1px;
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    .server-card .join-btn:hover {
+      background: #4752c4;
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(88, 101, 242, 0.3);
+    }
+
+    .server-card .join-btn:active {
+      transform: scale(0.95);
+    }
+
     /* -------------------- VALUES -------------------- */
     .values {
       padding: 80px 8% 60px;
@@ -766,6 +849,12 @@
       .contacts-grid {
         grid-template-columns: repeat(3, 1fr);
       }
+      .server-card {
+        padding: 30px 25px;
+      }
+      .server-card h3 {
+        font-size: 28px;
+      }
     }
 
     @media (max-width: 700px) {
@@ -820,6 +909,16 @@
       .contact-name {
         font-size: 18px;
       }
+      .server-card {
+        padding: 25px 20px;
+      }
+      .server-card h3 {
+        font-size: 24px;
+      }
+      .server-card .join-btn {
+        padding: 14px 30px;
+        font-size: 16px;
+      }
       footer {
         flex-direction: column;
         text-align: center;
@@ -842,6 +941,11 @@
       .buttons .btn {
         width: 100%;
         text-align: center;
+      }
+      .server-card .join-btn {
+        padding: 12px 25px;
+        font-size: 14px;
+        width: 100%;
       }
     }
 
@@ -918,7 +1022,7 @@
       <a href="#values">Галерея</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <a href="#" class="discord-btn">JOIN DISCORD</a>
+    <a href="https://discord.gg/4pJvUR6wre" target="_blank" class="discord-btn">JOIN DISCORD</a>
   </header>
 
   <section class="hero" id="hero">
@@ -930,7 +1034,7 @@
         <strong>Вступил — значит готов к битве.</strong>
       </div>
       <div class="buttons">
-        <a href="#" class="btn btn-primary">JOIN DISCORD</a>
+        <a href="https://discord.gg/4pJvUR6wre" target="_blank" class="btn btn-primary">JOIN DISCORD</a>
         <a href="#about" class="btn btn-outline">ПРАВИЛА</a>
       </div>
     </div>
@@ -1005,6 +1109,20 @@
           ⚠️ Незнание правил не освобождает от ответственности.
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- DISCORD СЕРВЕР -->
+  <section class="discord-server" id="discord">
+    <div class="server-card reveal">
+      <span class="discord-icon">💜</span>
+      <h3>DISCORD СЕРВЕР</h3>
+      <div class="server-stats">
+        <span>159</span> участников · <span>40</span> в онлайне
+      </div>
+      <a href="https://discord.gg/4pJvUR6wre" target="_blank" class="join-btn">
+        ПРИСОЕДИНИТЬСЯ
+      </a>
     </div>
   </section>
 
@@ -1105,6 +1223,7 @@
       <a href="#news">Новости</a>
       <a href="#values">Галерея</a>
       <a href="#contacts">Контакты</a>
+      <a href="https://discord.gg/4pJvUR6wre" target="_blank">Discord</a>
     </div>
   </footer>
 
