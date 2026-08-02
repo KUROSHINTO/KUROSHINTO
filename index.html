@@ -418,6 +418,7 @@
       border-radius: 14px;
       padding: 20px 24px;
       border: 1px solid #2a2a2a;
+      position: relative;
     }
 
     .punishment-grid h3 {
@@ -436,6 +437,19 @@
       font-size: 15px;
       color: #c0c0c0;
       border-bottom: 1px solid #1a1a1a;
+      cursor: pointer;
+      transition: 0.2s;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 2px 0;
+    }
+
+    .punishment-item:hover {
+      background: rgba(212, 176, 77, 0.05);
+    }
+
+    .punishment-item:active {
+      transform: scale(0.98);
     }
 
     .punishment-item:last-child {
@@ -450,6 +464,7 @@
       font-size: 13px;
       min-width: 60px;
       text-align: center;
+      pointer-events: none;
     }
 
     .badge-yellow {
@@ -469,6 +484,7 @@
 
     .punishment-desc {
       color: #aaa;
+      pointer-events: none;
     }
 
     /* -------------------- CONTACTS -------------------- */
@@ -492,6 +508,9 @@
       padding: 25px 20px;
       text-align: center;
       transition: 0.35s ease;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
     }
 
     .contact-card:hover {
@@ -500,12 +519,17 @@
       box-shadow: 0 10px 30px rgba(212, 176, 77, 0.06);
     }
 
+    .contact-card:active {
+      transform: scale(0.97);
+    }
+
     .contact-role {
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 2px;
       color: #d4b04d;
       font-weight: 600;
+      pointer-events: none;
     }
 
     .contact-name {
@@ -515,12 +539,14 @@
       color: #f0f0f0;
       font-family: 'Oswald', sans-serif;
       letter-spacing: 1px;
+      pointer-events: none;
     }
 
     .contact-icon {
       font-size: 28px;
       margin-bottom: 8px;
       display: block;
+      pointer-events: none;
     }
 
     .contact-card.leader {
@@ -543,7 +569,7 @@
       color: #7aadc9;
     }
 
-    /* -------------------- DISCORD SERVER CARD -------------------- */
+    /* -------------------- DISCORD SERVER CARD (БЕЗ СТАТИСТИКИ) -------------------- */
     .discord-server {
       padding: 0 8% 40px;
       scroll-margin-top: 90px;
@@ -588,17 +614,6 @@
       font-size: 36px;
       letter-spacing: 2px;
       color: #f0f0f0;
-    }
-
-    .server-card .server-stats {
-      color: #a0a0b0;
-      font-size: 16px;
-      margin: 8px 0 20px;
-    }
-
-    .server-card .server-stats span {
-      color: #5865F2;
-      font-weight: 600;
     }
 
     .server-card .join-btn {
@@ -985,9 +1000,74 @@
       color: #999;
       margin-top: 4px;
     }
+
+    /* Музыкальный индикатор */
+    .music-indicator {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 176, 77, 0.3);
+      border-radius: 50px;
+      padding: 10px 18px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      font-size: 13px;
+      color: #d4b04d;
+      animation: fadeIn 0.5s ease;
+      box-shadow: 0 0 30px rgba(212, 176, 77, 0.1);
+    }
+
+    .music-indicator.active {
+      display: flex;
+    }
+
+    .music-indicator .note {
+      animation: pulseNote 1s infinite;
+    }
+
+    @keyframes pulseNote {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .music-indicator .stop-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #888;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .music-indicator .stop-btn:hover {
+      border-color: #d4b04d;
+      color: #d4b04d;
+    }
   </style>
 </head>
 <body>
+  <!-- Музыкальный индикатор -->
+  <div class="music-indicator" id="musicIndicator">
+    <span class="note">🎵</span>
+    <span>gazan 67</span>
+    <button class="stop-btn" id="stopMusicBtn">✕</button>
+  </div>
+
   <header>
     <a href="#hero" class="logo">
       <div class="logo-circle">
@@ -1074,15 +1154,15 @@
 
       <div class="punishment-grid">
         <h3>⚖️ НАКАЗАНИЯ</h3>
-        <div class="punishment-item">
+        <div class="punishment-item" id="punishment1">
           <span class="punishment-badge badge-yellow">🟨 1</span>
           <span class="punishment-desc">Предупреждение</span>
         </div>
-        <div class="punishment-item">
+        <div class="punishment-item" id="punishment2">
           <span class="punishment-badge badge-orange">🟧 2</span>
           <span class="punishment-desc">Мут или временное ограничение</span>
         </div>
-        <div class="punishment-item">
+        <div class="punishment-item" id="punishment3">
           <span class="punishment-badge badge-red">🟥 3</span>
           <span class="punishment-desc">Исключение из клана или бан</span>
         </div>
@@ -1093,14 +1173,11 @@
     </div>
   </section>
 
-  <!-- DISCORD СЕРВЕР -->
+  <!-- DISCORD СЕРВЕР (БЕЗ СТАТИСТИКИ) -->
   <section class="discord-server" id="discord">
     <div class="server-card reveal">
       <span class="discord-icon">💜</span>
       <h3>DISCORD СЕРВЕР</h3>
-      <div class="server-stats">
-        <span>159</span> участников · <span>40</span> в онлайне
-      </div>
       <a href="https://discord.gg/4pJvUR6wre" target="_blank" class="join-btn">
         ПРИСОЕДИНИТЬСЯ
       </a>
@@ -1132,7 +1209,7 @@
         <div class="contact-role">Vice-Leader</div>
         <div class="contact-name">b9taa</div>
       </div>
-      <div class="contact-card assistant reveal">
+      <div class="contact-card assistant reveal" id="assistantContact">
         <span class="contact-icon">🛡️</span>
         <div class="contact-role">Assistant Deputy</div>
         <div class="contact-name">sad1k</div>
@@ -1250,6 +1327,141 @@
           }
         });
       });
+
+      // ===== МУЗЫКА "GAZAN 67" =====
+      const MUSIC_URL = "https://www.myinstants.com/media/sounds/67-gazan.mp3";
+      
+      let audio = null;
+      let isMusicPlaying = false;
+      let musicTriggered = false;
+      
+      let punishment1Clicked = false;
+      let punishment2Clicked = false;
+      let punishment3Clicked = false;
+      let assistantClicks = 0;
+      
+      const musicIndicator = document.getElementById('musicIndicator');
+      const stopMusicBtn = document.getElementById('stopMusicBtn');
+      const assistantCard = document.getElementById('assistantContact');
+
+      function playMusic() {
+        if (musicTriggered) return;
+        
+        try {
+          if (!audio) {
+            audio = new Audio(MUSIC_URL);
+            audio.preload = "auto";
+            audio.loop = true;
+            
+            audio.addEventListener('ended', () => {
+              if (isMusicPlaying) {
+                audio.currentTime = 0;
+                audio.play().catch(() => {});
+              }
+            });
+          }
+          
+          audio.play().then(() => {
+            isMusicPlaying = true;
+            musicTriggered = true;
+            musicIndicator.classList.add('active');
+            console.log("🎵 Gazan 67 играет!");
+          }).catch(err => {
+            console.log("Не удалось воспроизвести музыку:", err);
+            if (err.name === 'NotAllowedError') {
+              alert("Нажмите еще раз — браузер требует взаимодействия с пользователем");
+            }
+          });
+        } catch (e) {
+          console.error("Ошибка воспроизведения:", e);
+        }
+      }
+
+      function stopMusic() {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          isMusicPlaying = false;
+          musicIndicator.classList.remove('active');
+          musicTriggered = false;
+          resetAll();
+          console.log("🎵 Музыка остановлена");
+        }
+      }
+
+      function resetAll() {
+        punishment1Clicked = false;
+        punishment2Clicked = false;
+        punishment3Clicked = false;
+        assistantClicks = 0;
+        if (assistantCard) {
+          assistantCard.style.borderColor = '#6a8a9a';
+        }
+      }
+
+      stopMusicBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stopMusic();
+      });
+
+      document.getElementById('punishment1').addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (musicTriggered) return;
+        punishment1Clicked = true;
+        console.log('🟨 1 нажат');
+      });
+
+      document.getElementById('punishment2').addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (musicTriggered) return;
+        punishment2Clicked = true;
+        console.log('🟧 2 нажат');
+      });
+
+      document.getElementById('punishment3').addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (musicTriggered) return;
+        punishment3Clicked = true;
+        console.log('🟥 3 нажат');
+      });
+
+      if (assistantCard) {
+        assistantCard.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (musicTriggered) return;
+          
+          if (!punishment1Clicked || !punishment2Clicked || !punishment3Clicked) {
+            console.log('Сначала нажмите все три наказания: 🟨1, 🟧2, 🟥3');
+            return;
+          }
+          
+          assistantClicks++;
+          console.log(`Assistant Deputy нажат ${assistantClicks}/67 (скрыто)`);
+          
+          if (assistantClicks >= 67) {
+            console.log('🎵 67 кликов! Включаем Gazan 67!');
+            playMusic();
+          }
+        });
+      }
+
+      let resetTimer = null;
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.punishment-item') && 
+            !e.target.closest('#assistantContact') &&
+            !musicTriggered) {
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(() => {
+            if (!musicTriggered) {
+              resetAll();
+              console.log("Счетчик сброшен (бездействие)");
+            }
+          }, 30000);
+        }
+      });
+
+      console.log("🎵 Скрытая активация: нажми 🟨1, 🟧2, 🟥3, затем 67 раз на Assistant Deputy");
+      console.log("🔊 Источник: " + MUSIC_URL);
     });
   </script>
 </body>
